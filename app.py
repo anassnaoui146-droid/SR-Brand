@@ -54,26 +54,39 @@ def product_dict(row):
 
 
 def init_database():
-    # Database must be created once via mysql_schema.sql because MySQL
-    # does not permit selecting a missing database through the app connection.
-    conn = get_conn()
-    cur = conn.cursor(dictionary=True)
+    try:
+        conn = get_conn()
+        if not conn:
+            print("⚠️ DB connection failed during init")
+            return
+            
+        cur = conn.cursor(dictionary=True)
+        
+        for name in DEFAULT_CATEGORIES:
+            cur.execute('INSERT IGNORE INTO categories (name) VALUES (%s)', (name,))
 
-    for name in DEFAULT_CATEGORIES:
-        cur.execute('INSERT IGNORE INTO categories (name) VALUES (%s)', (name,))
 
-    cur.execute('SELECT COUNT(*) AS total FROM products')
-    if cur.fetchone()['total'] == 0:
-        for item in DEFAULT_PRODUCTS:
-            name, category, price, old_price, badge, description, sizes, image, stock, featured = item
-            cur.execute('''
-                INSERT INTO products
-                    (category, name, price, old_price, badge, description, sizes, image, stock, featured)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
-            ''', (category, name, price, old_price, badge, description, sizes, image, stock, featured))
-    conn.commit()
-    cur.close()
-    conn.close()
+        cur.execute('SELECT COUNT(*) AS total FROM products')
+        if cur.fetchone()['total'] == 0:
+            for item in DEFAULT_PRODUCTS:
+                name, category, price, old_price, badge, description, sizes, image, stock, featured 
+= item
+                cur.execute('''
+                    INSERT INTO products
+                        (category, name, price, old_price, badge, description, sizes, image, stock, 
+featured)
+                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                ''', (category, name, price, old_price, badge, description, sizes, image, stock, 
+featured))
+
+
+        conn.commit()
+        cur.close()
+        conn.close()
+        print("✅ DB initialized successfully")
+    except Exception as e:
+        print(f"⚠️ DB init skipped: {e}")
+        
 
 
 
