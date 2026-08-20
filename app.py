@@ -11,13 +11,12 @@ from mysql.connector import Error
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 app = Flask(__name__)
 CORS(app)
-
 DB_CONFIG = {
-    'host': os.getenv('MYSQL_HOST', '127.0.0.1'),
-    'port': int(os.getenv('MYSQL_PORT', '3306')),
-    'user': os.getenv('MYSQL_USER', 'root'),
-    'password': os.getenv('MYSQL_PASSWORD', ''),
-    'database': os.getenv('MYSQL_DATABASE', 'divastra_db'),
+    'host': 'bok0ypbful2dko8erxl3-mysql.services.clever-cloud.com',
+    'port': 3306,
+    'user': 'uujgrsx3mjllh7g5',
+    'password': 'Z902Hx8J6xq37KmWUh8e',
+    'database': 'bok0ypbful2dko8erxl3'
 }
 JAVA_ORDER_URL = os.getenv('JAVA_ORDER_URL', 'http://127.0.0.1:8080/api/java/order')
 
