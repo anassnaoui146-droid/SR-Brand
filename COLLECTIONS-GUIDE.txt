@@ -1,0 +1,16 @@
+كيفاش تزيد الصور ديال collections
+
+1) افتح dossier: static/images/collections/
+2) حط الصور ديالك فيه.
+3) سميهم مثلا:
+   collection-01.jpg
+   collection-02.jpg
+   collection-03.jpg
+   collection-04.jpg
+4) افتح site.js وابحث على LOCAL_PRODUCTS.
+5) كل image كتكون هكذا:
+   image:'images/collections/collection-01.jpg'
+6) بدّل name وprice وdescription وimage حسب collection ديالك.
+
+مهم: ما كايناش pages article-1/article-2/article-3 فهاد النسخة.
+كل section عندها page ديالها، وBoutique مخصصة للـcollections/products والصور ديالهم.
